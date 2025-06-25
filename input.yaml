@@ -1,0 +1,17 @@
+file_path: baseline.traj   # file path for QGBR refinement, in traj format
+num_workers: 4        # parallel  workers
+use_atoms: True      # use prior information from atoms or not
+atoms_path: bestP32.traj      # should be atoms path if use prior information
+
+Graph:
+  method: min_dist    # method to construct graph, min_dist, min_VIRE or voronoi
+  delta: 0.1          # tolerance in method
+
+Refine:
+  cmax: 1.0           # coefficient of r_max
+  cmin: 0.9           # coefficient of r_min
+  cunbond: 1.0        # coefficient of r_NBD
+  k: 2.0              # coefficient of force
+  fmax: 1e-5          # convergence criterion of graph force
+  steps: 200          # max steps for refinement
+  energy_cov: 0.01    # convergence criterion of graph energy
