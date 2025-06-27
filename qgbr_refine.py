@@ -8,7 +8,7 @@ from pycqg.calculator import GraphCalculator
 from pycqg.generator import GraphGenerator, quot_gen, get_dict
 import multiprocessing as mp
 import numpy as np
-import logging
+import argparse
 import yaml
 
 def attach_graph(atoms, approach="min_dist", delta=0.1, coor_num=None):
@@ -91,7 +91,7 @@ def mp_refine(mp_args):
     '''
     traj_path, numbers, approach, delta, cmax, cmin, cunbond, k, fmax, steps, energy_cov, best_dict, i = mp_args
     fmax = float(fmax)
-    qgbr = Trajectory(f"qgbr_{i}.traj", mode='a')
+    qgbr = Trajectory(f"QGBR_{i}.traj", mode='a')
     traj = Trajectory(traj_path)
     for num in numbers:
         atoms = traj[num] 
@@ -102,7 +102,11 @@ def mp_refine(mp_args):
     qgbr.close()
 
 if __name__ == "__main__":
-    with open('input.yaml', 'r') as fileobj:
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--input_para', type=str, default=None, help='input file', required=True)
+    args = parser.parse_args()
+
+    with open(args.input_para, 'r') as fileobj:
         para = yaml.safe_load(fileobj)
 
     file_path = para["file_path"]
